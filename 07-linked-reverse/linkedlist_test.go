@@ -106,3 +106,143 @@ func TestReverse(t *testing.T) {
 		assert.Equal(t, err, test.err)
 	}
 }
+
+// TestHasCircle 检测是否有环
+func TestHasCircle(t *testing.T) {
+	ln1 := &LinkedNode{value: "val1"}
+	ln2 := &LinkedNode{value: "val2"}
+	ln3 := &LinkedNode{value: "val3"}
+	ln4 := &LinkedNode{value: "val4"}
+	ln5 := &LinkedNode{value: "val5"}
+	tests := []struct {
+		nodes     []*LinkedNode
+		hasCircle bool
+	}{
+		{
+			nodes: []*LinkedNode{
+				ln1,
+			},
+			hasCircle: false},
+		{
+			nodes: []*LinkedNode{
+				ln1, ln2,
+			},
+			hasCircle: false},
+		{
+			nodes: []*LinkedNode{
+				ln1, ln2, ln1,
+			},
+			hasCircle: true},
+		{
+			nodes: []*LinkedNode{
+				ln1, ln2, ln3, ln1,
+			},
+			hasCircle: true},
+		{
+			nodes: []*LinkedNode{
+				ln1, ln2, ln3, ln4, ln1,
+			},
+			hasCircle: true},
+		{
+			nodes: []*LinkedNode{
+				ln1, ln2, ln3, ln4, ln5, ln1,
+			},
+			hasCircle: true},
+		{
+			nodes: []*LinkedNode{
+				ln1, ln2, ln3, ln4, ln2,
+			},
+			hasCircle: true},
+		{
+			nodes: []*LinkedNode{
+				ln1, ln2, ln3, ln4, ln5, ln2,
+			},
+			hasCircle: true},
+		{
+			nodes: []*LinkedNode{
+				ln1, ln2, ln3, ln4, ln5, ln3,
+			},
+			hasCircle: true},
+	}
+	for _, test := range tests {
+		var prev *LinkedNode
+		for _, node := range test.nodes {
+			node.next = prev
+			prev = node
+		}
+		ll := &LinkedList{head: &LinkedNode{next: prev}}
+		//反转
+		hasCircle := ll.HasCircle()
+		assert.Equal(t, hasCircle, test.hasCircle)
+	}
+}
+
+// TestHasCycle 优化版的有环检测
+func TestHasCycle(t *testing.T) {
+	ln1 := &LinkedNode{value: "val1"}
+	ln2 := &LinkedNode{value: "val2"}
+	ln3 := &LinkedNode{value: "val3"}
+	ln4 := &LinkedNode{value: "val4"}
+	ln5 := &LinkedNode{value: "val5"}
+	tests := []struct {
+		nodes     []*LinkedNode
+		hasCircle bool
+	}{
+		{
+			nodes: []*LinkedNode{
+				ln1,
+			},
+			hasCircle: false},
+		{
+			nodes: []*LinkedNode{
+				ln1, ln2,
+			},
+			hasCircle: false},
+		{
+			nodes: []*LinkedNode{
+				ln1, ln2, ln1,
+			},
+			hasCircle: true},
+		{
+			nodes: []*LinkedNode{
+				ln1, ln2, ln3, ln1,
+			},
+			hasCircle: true},
+		{
+			nodes: []*LinkedNode{
+				ln1, ln2, ln3, ln4, ln1,
+			},
+			hasCircle: true},
+		{
+			nodes: []*LinkedNode{
+				ln1, ln2, ln3, ln4, ln5, ln1,
+			},
+			hasCircle: true},
+		{
+			nodes: []*LinkedNode{
+				ln1, ln2, ln3, ln4, ln2,
+			},
+			hasCircle: true},
+		{
+			nodes: []*LinkedNode{
+				ln1, ln2, ln3, ln4, ln5, ln2,
+			},
+			hasCircle: true},
+		{
+			nodes: []*LinkedNode{
+				ln1, ln2, ln3, ln4, ln5, ln3,
+			},
+			hasCircle: true},
+	}
+	for _, test := range tests {
+		var prev *LinkedNode
+		for _, node := range test.nodes {
+			node.next = prev
+			prev = node
+		}
+		ll := &LinkedList{head: &LinkedNode{next: prev}}
+		//反转
+		hasCircle := ll.HasCycle()
+		assert.Equal(t, hasCircle, test.hasCircle)
+	}
+}

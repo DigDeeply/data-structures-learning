@@ -58,3 +58,14 @@ func TestQuickSort(t *testing.T) {
 		}
 	}
 }
+
+func TestQuick2Sort(t *testing.T) {
+	for _, test := range tests {
+		fmt.Println("before sort: ", test.arr)
+		res := quick2Sort(test.arr)
+		fmt.Println("after  sort: ", res)
+		if !reflect.DeepEqual(res, test.res) {
+			t.Fail()
+		}
+	}
+}

@@ -107,3 +107,31 @@ func (a *Arr) Delete(v int) (err error) {
 func (a *Arr) Print() {
 	fmt.Printf("len: %d, maxLength: %d, value: %v\n", a.len, a.maxLength, a.val)
 }
+
+// MergeSortedArray 合并两个有序数组
+func MergeSortedArray(a, b []int) []int {
+	lena := len(a)
+	lenb := len(b)
+	merged := make([]int, 0)
+	i, j := 0, 0
+	for i < lena && j < lenb {
+		if a[i] <= b[j] {
+			merged = append(merged, a[i])
+			i++
+		} else {
+			merged = append(merged, b[j])
+			j++
+		}
+	}
+	if i < lena {
+		for k := i; k < lena; k++ {
+			merged = append(merged, a[k])
+		}
+	}
+	if j < lenb {
+		for k := j; k < lenb; k++ {
+			merged = append(merged, b[k])
+		}
+	}
+	return merged
+}
